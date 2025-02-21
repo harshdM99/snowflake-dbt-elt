@@ -211,7 +211,8 @@ month_df['Month'] = pd.Categorical(
 )
 month_df = month_df.sort_values('Month')  # Sort by chronological month order
 
-month_df.fillna(0, inplace=True)
+numeric_cols = ['Total Monthly Revenue']  # Add all numeric columns here
+month_df[numeric_cols] = month_df[numeric_cols].fillna(0)
 
 # Convert revenue to millions
 month_df['Total Monthly Revenue'] = month_df['Total Monthly Revenue'] 
