@@ -21,7 +21,7 @@ def get_snowflake_connection():
     )
 conn = get_snowflake_connection()
 
-def fetch_kpi_data(query):
+def get_kpi_data(query):
     return pd.read_sql(query, conn)
 
 def format_revenue(revenue):
@@ -46,7 +46,7 @@ def fetch_kpi_data():
     FROM sandbox.consumption_sch.vw_yearly_revenue_kpis
     ORDER BY year;
     """
-    return fetch_kpi_data(query)
+    return get_kpi_data(query)
 
 #TO_CHAR(TO_DATE(month::text, 'MM'), 'Mon') AS month_abbr,  -- Converts month number to abbreviated month name
 def fetch_monthly_kpi_data(year):
@@ -59,8 +59,7 @@ def fetch_monthly_kpi_data(year):
     WHERE year = {year}
     ORDER BY month;
     """
-    return fetch_kpi_data(query)
-
+    return get_kpi_data(query)
 
 def fetch_unique_months(year):
     query = f"""
@@ -70,7 +69,7 @@ def fetch_unique_months(year):
     WHERE YEAR = {year} 
     ORDER BY MONTH;
     """
-    return fetch_kpi_data(query)
+    return get_kpi_data(query)
     
 def fetch_top_restaurants(year, month):
     query = f"""
@@ -90,7 +89,7 @@ def fetch_top_restaurants(year, month):
         total_revenue DESC
     LIMIT 10;
     """
-    return fetch_kpi_data(query)
+    return get_kpi_data(query)
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
 def snowpark_to_pandas(snowpark_df):
