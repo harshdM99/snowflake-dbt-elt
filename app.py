@@ -5,7 +5,7 @@ import altair as alt
 import snowflake.connector
 
 # App Title
-st.title("Revenue Dashboard")
+st.title("Revenue Dashboard (Fetching Live From Snowflake) ")
 
 @st.cache_resource
 def get_snowflake_connection():
