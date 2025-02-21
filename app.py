@@ -64,7 +64,7 @@ def fetch_monthly_kpi_data(year):
     ORDER BY month;
     """
     df = get_kpi_data(query)
-    print("🔍 Fetched KPI Data:", df)  # Debugging
+    st.write("🔍 Fetched KPI Data:", df)  # Debugging
     return df
     
 
@@ -77,7 +77,7 @@ def fetch_unique_months(year):
     ORDER BY MONTH;
     """
     df = get_kpi_data(query)
-    print(f"📊 Monthly KPI Data for {year}:", df)  # Debugging
+    st.write(f"📊 Monthly KPI Data for {year}:", df)  # Debugging
     return df
     
 def fetch_top_restaurants(year, month):
@@ -99,7 +99,7 @@ def fetch_top_restaurants(year, month):
     LIMIT 10;
     """
     df = get_kpi_data(query)
-    print(f"🍽️ Top Restaurants for {month}/{year}:", df)  # Debugging
+    st.write(f"🍽️ Top Restaurants for {month}/{year}:", df)  # Debugging
     return df
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
@@ -266,13 +266,13 @@ if selected_year:
 
     #get the unique months
     month_sf_df = fetch_unique_months(selected_year)
-    print(month_sf_df)
+    st.write(month_sf_df)
     #convert into df
     month_df = pd.DataFrame(
         month_sf_df,
         columns=['MONTH']
     )
-    print(month_df)
+    st.write(month_df)
 
     # Year Selection Box
     months = month_df["MONTH"].unique()
