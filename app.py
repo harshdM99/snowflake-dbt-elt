@@ -59,7 +59,10 @@ def fetch_monthly_kpi_data(year):
     WHERE year = {year}
     ORDER BY month;
     """
-    return get_kpi_data(query)
+    df = get_kpi_data(query)
+    print("🔍 Fetched KPI Data:", df)  # Debugging
+    return df
+    
 
 def fetch_unique_months(year):
     query = f"""
@@ -69,7 +72,9 @@ def fetch_unique_months(year):
     WHERE YEAR = {year} 
     ORDER BY MONTH;
     """
-    return get_kpi_data(query)
+    df = get_kpi_data(query)
+    print(f"📊 Monthly KPI Data for {year}:", df)  # Debugging
+    return df
     
 def fetch_top_restaurants(year, month):
     query = f"""
@@ -89,7 +94,9 @@ def fetch_top_restaurants(year, month):
         total_revenue DESC
     LIMIT 10;
     """
-    return get_kpi_data(query)
+    df = get_kpi_data(query)
+    print(f"🍽️ Top Restaurants for {month}/{year}:", df)  # Debugging
+    return df
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
 def snowpark_to_pandas(snowpark_df):
