@@ -97,7 +97,7 @@ def fetch_top_restaurants(year, month):
     LIMIT 10;
     """
     df = get_kpi_data(query)
-    st.write(df.style.hide(axis="index"))
+    st.dataframe(df, hide_index= True)
     return df
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
