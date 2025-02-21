@@ -64,7 +64,6 @@ def fetch_monthly_kpi_data(year):
     ORDER BY month;
     """
     df = get_kpi_data(query)
-    st.write("🔍 Fetched KPI Data:", df)  # Debugging
     return df
     
 
@@ -77,7 +76,6 @@ def fetch_unique_months(year):
     ORDER BY MONTH;
     """
     df = get_kpi_data(query)
-    st.write(f"📊 Monthly KPI Data for {year}:", df)  # Debugging
     return df
     
 def fetch_top_restaurants(year, month):
@@ -99,7 +97,7 @@ def fetch_top_restaurants(year, month):
     LIMIT 10;
     """
     df = get_kpi_data(query)
-    st.write(f"🍽️ Top Restaurants for {month}/{year}:", df)  # Debugging
+    st.write(df)  # Debugging
     return df
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
@@ -294,6 +292,6 @@ if selected_year:
             styled_df = top_restaurants_df.style.apply(highlight_rows, axis=1)
 
             # Display the styled DataFrame
-            st.dataframe(styled_df, hide_index= True)
+            # st.dataframe(styled_df, hide_index= True)
         else:
             st.warning("No data found for the selected year and month.")
