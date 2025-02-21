@@ -2,13 +2,25 @@
 import streamlit as st
 import pandas as pd
 import altair as alt
-from snowflake.snowpark.context import get_active_session
+import snowflake.connector
 
 # App Title
 st.title("Revenue Dashboard")
 
-# Get the current credentials
-session = get_active_session()
+@st.cache_resource
+def get_snowflake_connection():
+    return snowflake.connector.connect(
+        user=st.secrets["snowflake"]["user"],
+        password=st.secrets["snowflake"]["password"],
+        account=st.secrets["snowflake"]["account"],
+        warehouse=st.secrets["snowflake"]["warehouse"],
+        database=st.secrets["snowflake"]["database"],
+        schema=st.secrets["snowflake"]["schema"]
+    )
+conn = get_snowflake_connection()
+
+def fetch_kpi_data(query):
+    return pd.read_sql(query, conn)
 
 def format_revenue(revenue):
     #return f"₹{revenue / 1_000_000:.1f}M"
@@ -32,7 +44,7 @@ def fetch_kpi_data():
     FROM sandbox.consumption_sch.vw_yearly_revenue_kpis
     ORDER BY year;
     """
-    return session.sql(query).collect()
+    return fetch_kpi_data(query)
 
 #TO_CHAR(TO_DATE(month::text, 'MM'), 'Mon') AS month_abbr,  -- Converts month number to abbreviated month name
 def fetch_monthly_kpi_data(year):
@@ -45,7 +57,7 @@ def fetch_monthly_kpi_data(year):
     WHERE year = {year}
     ORDER BY month;
     """
-    return session.sql(query).collect()
+    return fetch_kpi_data(query)
 
 
 def fetch_unique_months(year):
@@ -56,7 +68,7 @@ def fetch_unique_months(year):
     WHERE YEAR = {year} 
     ORDER BY MONTH;
     """
-    return session.sql(query).collect()
+    return fetch_kpi_data(query)
     
 def fetch_top_restaurants(year, month):
     query = f"""
@@ -76,7 +88,7 @@ def fetch_top_restaurants(year, month):
         total_revenue DESC
     LIMIT 10;
     """
-    return session.sql(query).collect()
+    return fetch_kpi_data(query)
     
 # Function to convert Snowpark DataFrame to Pandas DataFrame
 def snowpark_to_pandas(snowpark_df):
