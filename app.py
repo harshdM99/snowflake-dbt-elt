@@ -269,7 +269,7 @@ if selected_year:
     if selected_month:
         st.subheader(f"Top Restaurant for {selected_month}/{selected_year}")
         top_restaurants = fetch_top_restaurants(selected_year, selected_month)
-        if top_restaurants:
+        if not top_restaurants.empty:
             top_restaurants_df = snowpark_to_pandas(top_restaurants)
             # Remove index from DataFrame by resetting it and dropping the index column
             #top_restaurants_df_reset = top_restaurants_df.reset_index(drop=True)
