@@ -225,13 +225,10 @@ month_df = month_df.sort_values('Month')  # Sort by chronological month order
 numeric_cols = ['Total Monthly Revenue']  # Add all numeric columns here
 month_df[numeric_cols] = month_df[numeric_cols].fillna(0)
 
-# Convert revenue to millions
-month_df['Total Monthly Revenue'] = month_df['Total Monthly Revenue'] 
-
 # Plot Monthly Revenue Trend using Bar Chart
 st.subheader(f"{selected_year} - Monthly Revenue Trend")
 # Create the Altair Bar Chart with Custom Color
-bar_chart = alt.Chart(month_df).mark_bar(color="#ff5200").encode(
+bar_chart = alt.Chart(month_df.dropna()).mark_bar(color="#ff5200").encode(
     x=alt.X('Month', sort='ascending', title='Month'),
     y=alt.Y('Total Monthly Revenue', title='Revenue (₹)')
 ).properties(
@@ -282,9 +279,9 @@ if selected_year:
     # Fetch and Display Data
     if selected_month:
         st.subheader(f"Top Restaurant for {selected_month}/{selected_year}")
-        top_restaurants = fetch_top_restaurants(selected_year, selected_month)
-        if not top_restaurants.empty:
-            top_restaurants_df = snowpark_to_pandas(top_restaurants)
+        top_restaurants_df = fetch_top_restaurants(selected_year, selected_month)
+        if not top_restaurants_df.empty:
+            # top_restaurants_df = snowpark_to_pandas(top_restaurants)
             # Remove index from DataFrame by resetting it and dropping the index column
             #top_restaurants_df_reset = top_restaurants_df.reset_index(drop=True)
 
