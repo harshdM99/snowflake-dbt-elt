@@ -22,7 +22,11 @@ def get_snowflake_connection():
 conn = get_snowflake_connection()
 
 def get_kpi_data(query):
-    return pd.read_sql(query, conn)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    df = pd.DataFrame(cursor.fetch_pandas_all())  # ✅ Use fetch_pandas_all()
+    cursor.close()
+    return df
 
 def format_revenue(revenue):
     #return f"₹{revenue / 1_000_000:.1f}M"
