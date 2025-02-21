@@ -263,13 +263,11 @@ if selected_year:
 
     #get the unique months
     month_sf_df = fetch_unique_months(selected_year)
-    st.write(month_sf_df)
     #convert into df
     month_df = pd.DataFrame(
         month_sf_df,
         columns=['MONTH']
     )
-    st.write(month_df)
 
     # Year Selection Box
     months = month_df["MONTH"].unique()
