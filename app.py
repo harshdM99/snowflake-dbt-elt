@@ -200,11 +200,12 @@ st.divider()
 
 
 # Fetch and prepare data
-month_sf_df = fetch_monthly_kpi_data(selected_year)
-month_df = pd.DataFrame(
-    month_sf_df,
-    columns=['Month', 'Total Monthly Revenue']
-)
+month_df = fetch_monthly_kpi_data(selected_year)
+# month_df = pd.DataFrame(
+#     month_sf_df,
+#     columns=['Month', 'Total Monthly Revenue']
+# )
+month_df.columns = ['Month', 'Total Monthly Revenue']
 
 # Map numeric months to abbreviated month names
 month_mapping = {
