@@ -5,6 +5,7 @@ import altair as alt
 import snowflake.connector
 
 query_params = st.query_params
+st.write(query_params)
 if "route" in query_params and query_params["route"][0] == "health":
     st.write("Healthy")
     st.stop()
