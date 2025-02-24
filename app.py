@@ -4,9 +4,8 @@ import pandas as pd
 import altair as alt
 import snowflake.connector
 
-# Health Check Route
-params = st.get_query_params()
-if params.get("route", [""])[0] == "health":
+query_params = st.query_params
+if "route" in query_params and query_params["route"][0] == "health":
     st.write("Healthy")
     st.stop()
 
