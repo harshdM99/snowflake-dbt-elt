@@ -4,6 +4,12 @@ import pandas as pd
 import altair as alt
 import snowflake.connector
 
+# Health Check Route
+query_params = st.experimental_get_query_params()
+if "route" in query_params and query_params["route"][0] == "health":
+    st.write("Healthy")
+    st.stop()
+
 # App Title
 st.title("Revenue Dashboard")
 st.subheader("Fetching Live Data From Snowflake")
