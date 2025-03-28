@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: food_aggr_stage
+    database: sandbox
+    schema: stage_sch
+    tables:
+      - name: location
