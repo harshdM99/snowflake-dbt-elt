@@ -1,4 +1,4 @@
-# Food Aggregator Data Pipeline 🍽️🚀
+# Food Aggregator Data Pipeline 🍽️
 
 ## Overview
 
@@ -48,9 +48,68 @@ This project implements a **scalable ELT pipeline** using **Snowflake, dbt, and 
 
 ## 📌 Features
 
-✅ **End-to-End Automation** – Fully managed ELT pipeline with automated workflows.  
-✅ **Incremental Data Processing** – dbt processes only **delta data**, reducing costs.  
-✅ **Scalable Architecture** – Can handle **large datasets** with Snowflake.  
-✅ **Real-Time Analytics** – Live dashboards powered by **Streamlit & Snowflake Views**.
+**End-to-End Automation** – Fully managed ELT pipeline with automated workflows.  
+**Incremental Data Processing** – dbt processes only **delta data**, reducing costs.  
+**Scalable Architecture** – Can handle **large datasets** with Snowflake.  
+**Real-Time Analytics** – Live dashboards powered by **Streamlit & Snowflake Views**.
 
 ---
+
+## ⚡ How to Run the Pipeline
+
+### **1️⃣ Setup Environment**
+
+Ensure you have **dbt, Dagster, and Streamlit** installed:
+
+```sh
+pip install dbt-snowflake dagster dagster-snowflake streamlit
+
+```
+
+### Configure dbt profiles for Snowflake
+
+Set up your **dbt profiles** in `~/.dbt/profiles.yml`:
+
+```yaml
+your_profile_name:
+  outputs:
+    dev:
+      type: snowflake
+      account: "<your-snowflake-account>"
+      user: "<your-username>"
+      password: "<your-password>"
+      role: "ACCOUNTADMIN"
+      database: "<your-database>"
+      warehouse: "<your-warehouse>"
+      schema: "staging"
+```
+
+### **2️⃣ Run dbt Transformations**
+
+For a **full refresh**, run:
+
+```sh
+dbt run --full-refresh
+```
+
+For incremental updates, run:
+
+```sh
+dbt run
+```
+
+### **3️⃣ Orchestrate Pipeline with Dagster**
+
+Start Dagster:
+
+```sh
+dagster dev
+```
+
+### **4️⃣ Start Streamlit Dashboard**
+
+Run the Streamlit dashboard:
+
+```sh
+dagster dev
+```
