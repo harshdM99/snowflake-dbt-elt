@@ -111,5 +111,5 @@ dagster dev
 Run the Streamlit dashboard:
 
 ```sh
-dagster dev
+streamlit run app.py
 ```
